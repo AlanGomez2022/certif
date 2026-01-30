@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style.css">
+    <title>Instituto Antonio Toro</title>
+</head>
+<body class="container-fluid">
+    <h1 class="" id="titulo">Certificados de alumno regular - Nivel Inicial</h1>
+    <div class="container text-center ">
+        <div class="row">
+            <div class="col-5 d-none d-md-block">
+                <img  id="logoCert" src="../images/logoJard.png" alt="">
+            </div>
+            <div class="col-12 col-md-7">
+                <form id="form-certificado" class="p-4 rounded shadow" style="background: rgba(255,255,255,0.9);" data-origen="jardin">
+                    <label class="form-label formTitle">COMPLETE TODOS  LOS CAMPOS</label>
+
+                    <!-- Nombre y apellido -->
+                    <div class="mb-3">
+                        <label class="form-label">Nombre y Apellido del alumno</label>
+                        <input type="text" class="form-control" id="alumno" required>
+                    </div>
+
+                    <!-- DNI -->
+                    <div class="mb-3">
+                        <label class="form-label">DNI</label>
+                        <input type="text" class="form-control" id="dni" required>
+                    </div>
+
+                    <!-- Curso / Año / División -->
+                    <div class="mb-3">
+                        <label class="form-label">Curso / Año / División</label>
+                        <input type="text" class="form-control" id="curso" placeholder="Ej: 3° B" required>
+                    </div>
+
+                
+                    <!-- Fecha de emisión -->
+                    <div class="mb-3">
+                        <label class="form-label">Fecha de emisión</label>
+                        <input type="date" class="form-control" id="fecha">
+                    </div>
+
+                     <!-- a quien se presenta -->
+                    <div class="mb-3">
+                        <label class="form-label">Se presenta a:</label>
+                        <input id="quien" type="text" class="form-control"  value="A quien corresponda">
+                    </div>
+
+                 
+
+                    <button type="submit" class="btn btn-warning w-100" id="btnForm">
+                        Generar certificado
+                    </button>
+
+                    </form>
+
+                    <script>
+                    // Fecha automática (hoy)
+                    const hoy = new Date().toISOString().split("T")[0];
+                    document.getElementById("fecha").value = hoy;
+                    </script>
+
+            </div>
+        </div>
+    </div>
+</body>
+<!-- PARA EL PDF -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+
+<script defer src="../js/app.js"></script>
+
+<!-- bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+</html>

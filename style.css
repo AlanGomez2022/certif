@@ -1,0 +1,62 @@
+body {
+    background:url("images/fondo.jpg") center / cover no-repeat fixed;
+}
+
+h1{
+    text-align: center;
+    padding: 40px;
+    margin: 20px;
+    opacity: 0.5;
+    color: white;
+    font-family: "Outfit", sans-serif;
+    background-color: rgb(85, 83, 83);
+    border-radius: 70px;
+    border: 3px solid black;
+}
+
+.logo{
+    width: 70%;
+    opacity: 0.5;
+    transition: transform 0.3s ease, opacity 0.3s ease;;
+}
+.logo:hover{
+    transition: transform 0.3s ease, opacity 0.3s ease;;
+    transform: scale(1.2);
+    opacity: 1;
+}
+/* .logoSecu{
+    width: 100%;
+} */
+.contLogos{
+    padding: 80px;
+}
+
+.containerLogo{
+    display: flex;
+    align-items: center;
+}
+.formTitle{
+    color:rgb(141, 23, 7);
+    font-weight: bolder;
+}
+#form-certificado ::placeholder {
+  color: #af9c9c;   /* gris suave */
+  opacity: 0.4;       /* clave: algunos navegadores lo bajan solos */
+}
+
+
+.form-control{
+    font-weight: bolder;
+    text-align: center;
+    background-color:aliceblue;
+}
+#btnForm{
+    font-weight: bolder;
+    font-size:x-large;
+}
+#logoCert{
+    width: 100%;
+}
+.col-md-4{
+    padding: 20px;
+}
