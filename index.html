@@ -1,35 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="images/favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-    <!-- bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" 
-    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <title>Instituto Antonio Toro</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instituto Antonio Toro — Certificados</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
 </head>
-<body class="container-fluid">
-    <h1 class="" id="titulo">Certificados de alumno regular</h1>
-    <div class="container text-center contLogos">
-        <div class="row">
-            <div class="col-12 col-md-4">
-                <a href="pages/jardin.html"><img class="logo" src="images/logoJard.png" alt=""></a>
-            </div>
-            <div class="col-12 col-md-4">
-                <a href="pages/primaria.html"><img class="logo" src="images/logoPrim.png" alt=""></a>
-            </div>
-            <div class="col-12 col-md-4">
-                <a href="pages/secundaria.html"><img class="logo logoSecu" src="images/logoSecu.png" alt=""></a>
-            </div>
-        </div>
-    </div>
+<body>
+  <div class="bg-layer"></div>
+  <div class="bg-lines"></div>
+
+  <div class="page">
+    <header class="header">
+      <p class="header-eyebrow">Instituto Privado Antonio Toro</p>
+      <h1>Gestión de <span>Certificados</span></h1>
+      <div class="header-line"></div>
+    </header>
+
+    <p class="subtitle">Seleccioná el tipo de certificado que deseás emitir</p>
+
+    <nav class="menu-grid">
+      <a href="pages/seleccion.html?tipo=regular" class="menu-card card-regular">
+        <div class="card-icon"><img class="icono" src="images/logoCertif.png" alt=""></div>
+        <span class="card-label">Alumno Regular</span>
+        <span class="card-desc">Constancia de alumno regular<br>para todos los niveles</span>
+        <span class="card-arrow">CONTINUAR →</span>
+      </a>
+
+      <a href="pages/seleccion.html?tipo=pase" class="menu-card card-pase">
+        <div class="card-icon"><img class="icono" src="images/logoPase.png" alt=""></div>
+        <span class="card-label">Certificado de Pase</span>
+        <span class="card-desc">Solicitud o concesión de pase<br>para todos los niveles</span>
+        <span class="card-arrow">CONTINUAR →</span>
+      </a>
+    </nav>
+
+   <footer class="footer">
+  SISTEMA DE EMISIÓN DE CERTIFICADOS &nbsp;·&nbsp; SECRETARÍA ACADÉMICA
+  <br>
+  <span style="opacity: 0.35; font-size: 0.62rem; letter-spacing: 0.2em;">powered by Alan Gómez</span>
+</footer>
+  </div>
 </body>
-<!-- bootstrap -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
 </html>
