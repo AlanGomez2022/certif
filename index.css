@@ -1,0 +1,218 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bordo:        #6B1A2A;
+  --bordo-dark:   #4A0F1C;
+  --bordo-light:  #8B2A3E;
+  --azul:         #1A3A6B;
+  --azul-dark:    #0F2347;
+  --azul-light:   #2A5298;
+  --cream:        #F8F4EF;
+  --glass-bg:     rgba(255,255,255,0.07);
+  --glass-border: rgba(255,255,255,0.15);
+  --text-light:   rgba(255,255,255,0.92);
+  --text-muted:   rgba(255,255,255,0.55);
+}
+
+html, body {
+  min-height: 100vh;
+  font-family: 'Jost', sans-serif;
+  background: var(--azul-dark);
+  overflow-x: hidden;
+}
+
+/* ── Fondo animado ── */
+.bg-layer {
+  position: fixed; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(107,26,42,0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 70% at 80% 90%, rgba(26,58,107,0.7) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 60% 40%, rgba(74,15,28,0.35) 0%, transparent 55%),
+    linear-gradient(160deg, #0F2347 0%, #1a1a2e 50%, #2A0A12 100%);
+  animation: bgShift 12s ease-in-out infinite alternate;
+}
+@keyframes bgShift {
+  0%   { filter: hue-rotate(0deg) brightness(1); }
+  100% { filter: hue-rotate(8deg) brightness(1.05); }
+}
+
+/* Líneas decorativas */
+.bg-lines {
+  position: fixed; inset: 0; z-index: 0;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 80px,
+      rgba(255,255,255,0.015) 80px,
+      rgba(255,255,255,0.015) 81px
+    );
+}
+
+/* ── Layout ── */
+.page {
+  position: relative; z-index: 1;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3rem 1.5rem;
+}
+.icono{
+  width: 100%;
+}
+
+/* ── Header ── */
+.header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  animation: fadeDown 0.8s ease both;
+}
+.header-eyebrow {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 0.75rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+.header h1 {
+font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  color: var(--text-light);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+/* .header h1 span {
+  font-style: italic;
+  color: rgba(255,200,180,0.85);
+} */
+.header-line {
+  width: 60px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,180,160,0.6), transparent);
+  margin: 1.2rem auto 0;
+}
+
+/* ── Subtitle ── */
+.subtitle {
+  font-size: 0.85rem;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+  text-align: center;
+  animation: fadeDown 0.8s 0.15s ease both;
+}
+
+/* ── Menú cards ── */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  max-width: 680px;
+  width: 100%;
+}
+
+.menu-card {
+  position: relative;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  overflow: hidden;
+  animation: fadeUp 0.7s ease both;
+}
+.menu-card:nth-child(1) { animation-delay: 0.25s; }
+.menu-card:nth-child(2) { animation-delay: 0.4s; }
+
+.menu-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.menu-card.card-regular::before {
+  background: linear-gradient(135deg, rgba(107,26,42,0.3), rgba(139,42,62,0.15));
+}
+.menu-card.card-pase::before {
+  background: linear-gradient(135deg, rgba(26,58,107,0.3), rgba(42,82,152,0.15));
+}
+.menu-card:hover::before { opacity: 1; }
+.menu-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+}
+.menu-card.card-regular:hover { border-color: rgba(180,80,100,0.4); }
+.menu-card.card-pase:hover    { border-color: rgba(80,130,210,0.4); }
+
+.card-icon {
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+}
+.card-regular .card-icon { background: rgba(107,26,42,0.35); }
+.card-pase    .card-icon { background: rgba(26,58,107,0.35); }
+
+.card-label {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--text-light);
+  text-align: center;
+  position: relative; z-index: 1;
+}
+.card-desc {
+  font-size: 0.78rem;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  text-align: center;
+  position: relative; z-index: 1;
+}
+.card-arrow {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  position: relative; z-index: 1;
+  transition: color 0.3s, transform 0.3s;
+}
+.menu-card:hover .card-arrow {
+  color: var(--text-light);
+  transform: translateX(4px);
+}
+
+/* ── Footer ── */
+.footer {
+  margin-top: 4rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  text-align: center;
+  animation: fadeUp 0.7s 0.6s ease both;
+}
+
+/* ── Animaciones ── */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 500px) {
+  .menu-grid { grid-template-columns: 1fr; max-width: 340px; }
+}

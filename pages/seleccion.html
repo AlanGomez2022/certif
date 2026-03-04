@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instituto Antonio Toro — Selección de nivel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="seleccion.css">
+</head>
+<body>
+  <div class="bg-layer"></div>
+  <div class="bg-lines"></div>
+
+  <div class="page">
+    <a href="../index.html" class="back-btn">← VOLVER AL MENÚ</a>
+
+    <header class="header">
+      <p class="header-eyebrow">Instituto Privado Antonio Toro</p>
+      <div id="tipo-badge" class="tipo-badge"></div>
+      <h1>Seleccioná el <span>nivel</span></h1>
+      <div class="header-line"></div>
+    </header>
+
+    <p class="subtitle">Elegí la institución para continuar</p>
+
+    <div class="logos-grid">
+      <a id="link-jardin" href="#" class="logo-card">
+        <img src="../images/logoJard.png" alt="Nivel Inicial">
+        <span class="logo-label">Nivel Inicial</span>
+        <span class="logo-sub">Jardín</span>
+      </a>
+      <a id="link-primaria" href="#" class="logo-card">
+        <img src="../images/logoPrim.png" alt="Nivel Primario">
+        <span class="logo-label">Nivel Primario</span>
+        <span class="logo-sub">Primaria</span>
+      </a>
+      <a id="link-secundaria" href="#" class="logo-card">
+        <img src="../images/logoSecu.png" alt="Nivel Secundario">
+        <span class="logo-label">Nivel Secundario</span>
+        <span class="logo-sub">Secundaria</span>
+      </a>
+    </div>
+
+   <footer class="footer">
+  SISTEMA DE EMISIÓN DE CERTIFICADOS &nbsp;·&nbsp; SECRETARÍA ACADÉMICA
+  <br>
+  <span style="opacity: 0.35; font-size: 0.62rem; letter-spacing: 0.2em;">powered by Alan Gómez</span>
+</footer>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const tipo = params.get('tipo') || 'regular';
+
+    const badge = document.getElementById('tipo-badge');
+    badge.className = `tipo-badge ${tipo}`;
+    badge.textContent = tipo === 'regular' ? 'Alumno Regular' : 'Certificado de Pase';
+
+    ['jardin','primaria','secundaria'].forEach(nivel => {
+      document.getElementById(`link-${nivel}`).href = `formulario.html?tipo=${tipo}&nivel=${nivel}`;
+    });
+  </script>
+</body>
+</html>

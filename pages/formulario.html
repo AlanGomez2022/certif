@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instituto Antonio Toro — Formulario</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="formulario.css">
+</head>
+<body>
+  <div class="bg-layer"></div>
+  <div class="bg-lines"></div>
+
+  <div class="page">
+    <nav class="topnav">
+      <a href="seleccion.html" class="back-btn" id="back-link">← VOLVER</a>
+      <span id="tipo-badge" class="tipo-badge"></span>
+    </nav>
+
+    <div class="form-card">
+      <div class="card-header">
+        <img id="card-logo" class="card-logo" src="" alt="Logo institución">
+        <div class="card-header-text">
+          <p class="card-eyebrow" id="card-eyebrow"></p>
+          <h1 class="card-title" id="card-title"></h1>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="card-body">
+        <form id="form-cert">
+          <!-- ── Campos comunes ── -->
+          <div class="form-grid" id="campos-comunes">
+
+            <!-- PASE ONLY: tipo solicitud/concesión -->
+            <div class="field full" id="campo-tipo-pase" style="display:none;">
+              <label>Tipo de pase</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="tipo-pase" value="solicita" checked>
+                  <span class="radio-dot"></span>
+                  Solicita
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="tipo-pase" value="concede">
+                  <span class="radio-dot"></span>
+                  Concede
+                </label>
+              </div>
+            </div>
+
+            <div class="field full">
+              <label>Apellido y Nombre del alumno</label>
+              <input type="text" id="alumno" placeholder="Ej: García, Juan Manuel" required>
+            </div>
+
+            <div class="field">
+              <label>DNI</label>
+              <input type="text" id="dni" placeholder="Ej: 45.123.456" required>
+            </div>
+
+            <div class="field">
+              <label>Curso / Año / División</label>
+              <input type="text" id="curso" placeholder="Ej: 3° B" required>
+            </div>
+
+            <!-- REGULAR ONLY -->
+            <div class="field full" id="campo-quien">
+              <label>Se presenta a</label>
+              <input type="text" id="quien" value="A quien corresponda">
+            </div>
+
+            <!-- PASE ONLY: ciclo y lugar -->
+            <div class="field" id="campo-ciclo" style="display:none;">
+              <label>Ciclo escolar</label>
+              <input type="text" id="ciclo">
+            </div>
+
+            <div class="field" id="campo-lugar" style="display:none;">
+              <label>Lugar</label>
+              <input type="text" id="lugar" value="Pte. Derqui">
+            </div>
+
+            <div class="field">
+              <label>Fecha de emisión</label>
+              <input type="date" id="fecha">
+            </div>
+
+          </div>
+
+          <button type="submit" class="btn-submit" id="btn-submit">Generar certificado</button>
+        </form>
+      </div>
+    </div>
+
+<footer class="footer">
+  SISTEMA DE EMISIÓN DE CERTIFICADOS &nbsp;·&nbsp; SECRETARÍA ACADÉMICA
+  <br>
+  <span style="opacity: 0.35; font-size: 0.62rem; letter-spacing: 0.2em;">powered by Alan Gómez</span>
+</footer>  </div>
+
+  <!-- PDF libs -->
+  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+
+  <script>
+    // ── Parámetros ──────────────────────────────────────────────────────────
+    const params = new URLSearchParams(window.location.search);
+    const tipo  = params.get('tipo')  || 'regular';
+    const nivel = params.get('nivel') || 'primaria';
+
+    // ── Config por nivel ────────────────────────────────────────────────────
+    const NIVELES = {
+      jardin:     { label: 'Nivel Inicial',    sub: 'Jardín',    logo: '../images/logoJard.png' },
+      primaria:   { label: 'Nivel Primario',   sub: 'Primaria',  logo: '../images/logoPrim.png' },
+      secundaria: { label: 'Nivel Secundario', sub: 'Secundaria',logo: '../images/logoSecu.png' },
+    };
+
+    const PDF_URLS = {
+      jardin:     { regular: '../docs/regularJard.pdf', pase: '../docs/paseJard.pdf'   },
+      primaria:   { regular: '../docs/regularPrim.pdf', pase: '../docs/pasePrim.pdf'   },
+      secundaria: { regular: '../docs/regularSecu.pdf', pase: '../docs/paseSecu.pdf'   },
+    };
+
+    // Coordenadas — ajustar según cada PDF base
+    const COORDS = {
+      regular: {
+        alumno: { x: 265, y: 120 },
+        dni:    { x: 90,  y: 105 },
+        curso:  { x: 320, y: 105 },
+        quien:  { x: 13,  y: 70  },
+        fecha:  { x: 50,  y: 147 },
+      },
+      pase: {
+        tipoPase: { x: 310,  y: 135 },
+        alumno:   { x: 100, y: 120 },
+        dni:      { x: 265, y: 120  },
+        curso:    { x: 115,  y: 97 },
+        ciclo:    { x: 350, y: 97  },
+        lugar:    { x: 70,  y: 77  },
+        fecha:    { x: 140,  y: 77 },
+      },
+    };
+
+    // ── Configurar UI según tipo ────────────────────────────────────────────
+    const cfg = NIVELES[nivel];
+
+    document.getElementById('card-logo').src = cfg.logo;
+    document.getElementById('card-eyebrow').textContent = cfg.sub;
+    document.getElementById('card-title').innerHTML =
+      tipo === 'regular'
+        ? `Certificado de <span>Alumno Regular</span>`
+        : `Certificado de <span>Pase</span>`;
+
+    const badge = document.getElementById('tipo-badge');
+    badge.className = `tipo-badge ${tipo}`;
+    badge.textContent = tipo === 'regular' ? 'Alumno Regular' : 'Certificado de Pase';
+
+    document.getElementById('back-link').href = `seleccion.html?tipo=${tipo}`;
+
+    document.getElementById('btn-submit').textContent =
+      tipo === 'regular' ? 'Generar certificado' : 'Generar certificado de pase';
+
+    // Mostrar/ocultar campos según tipo
+    if (tipo === 'pase') {
+      document.getElementById('campo-tipo-pase').style.display = 'block';
+      document.getElementById('campo-ciclo').style.display     = 'block';
+      document.getElementById('campo-lugar').style.display     = 'block';
+      document.getElementById('campo-quien').style.display     = 'none';
+    }
+
+    // ── Fecha y valores automáticos ─────────────────────────────────────────
+    const hoy = new Date();
+    const hoyISO = hoy.toISOString().split('T')[0];
+    document.getElementById('fecha').value = hoyISO;
+    document.getElementById('ciclo').value = String(hoy.getFullYear());
+
+    // ── Helpers ─────────────────────────────────────────────────────────────
+    function dateToDDMMYYYY(value) {
+      if (!value) return '';
+      const [y, m, d] = value.split('-');
+      return `${d}/${m}/${y}`;
+    }
+
+    // ── DrawFit: ajusta el font size para que no se pise ────────────────────
+    function drawFit(page, text, { x, y, maxWidth, font, maxSize = 10, minSize = 6, color }) {
+      let size = maxSize;
+      while (size >= minSize) {
+        const width = font.widthOfTextAtSize(text, size);
+        if (width <= maxWidth) break;
+        size -= 1.75;
+      }
+      page.drawText(text, { x, y, size, font, color });
+    }
+
+    // ── Submit ───────────────────────────────────────────────────────────────
+    document.getElementById('form-cert').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!window.PDFLib) { alert('PDF-Lib no está cargado'); return; }
+
+      const pdfUrl = PDF_URLS[nivel]?.[tipo];
+      if (!pdfUrl) { alert(`PDF base no encontrado para ${nivel} - ${tipo}`); return; }
+
+      let existingPdfBytes;
+      try {
+        const res = await fetch(pdfUrl);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        existingPdfBytes = await res.arrayBuffer();
+      } catch (err) {
+        alert(`No se pudo cargar el PDF base:\n${pdfUrl}\n\n${err.message}`);
+        return;
+      }
+
+      const { PDFDocument, rgb, StandardFonts } = window.PDFLib;
+      const pdfDoc = await PDFDocument.load(existingPdfBytes);
+      const font   = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+      const page   = pdfDoc.getPages()[0];
+      const fs = 10;
+      const color = rgb(0, 0, 0);
+      const coords = COORDS[tipo];
+
+      const alumno = document.getElementById('alumno').value.trim();
+      const dni    = 'DNI N°: ' + document.getElementById('dni').value.trim();
+      const curso  = document.getElementById('curso').value.trim();
+      const fecha  = dateToDDMMYYYY(document.getElementById('fecha').value);
+
+      if (tipo === 'regular') {
+        const quien = document.getElementById('quien').value.trim();
+        drawFit(page, alumno, { x: coords.alumno.x, y: coords.alumno.y, maxWidth: 180, font, color });
+        if (dni)   page.drawText(dni,   { x: coords.dni.x,   y: coords.dni.y,   size: fs, font, color });
+        page.drawText(curso,  { x: coords.curso.x,  y: coords.curso.y,  size: fs, font, color });
+        if (quien) page.drawText(quien, { x: coords.quien.x, y: coords.quien.y, size: fs, font, color });
+        page.drawText(fecha,  { x: coords.fecha.x,  y: coords.fecha.y,  size: fs, font, color });
+
+      } else {
+        const tipoPase = document.querySelector('input[name="tipo-pase"]:checked').value;
+        const ciclo    = document.getElementById('ciclo').value.trim();
+        const lugar    = document.getElementById('lugar').value.trim();
+        const tipoPaseLabel = tipoPase === 'solicita' ? 'SOLICITA' : 'CONCEDE';
+
+        page.drawText(tipoPaseLabel, { x: coords.tipoPase.x, y: coords.tipoPase.y, size: fs, font, color });
+        drawFit(page, alumno, { x: coords.alumno.x, y: coords.alumno.y, maxWidth: 180, font, color });
+        if (dni)   page.drawText(dni,   { x: coords.dni.x,   y: coords.dni.y,   size: fs, font, color });
+        page.drawText(curso,  { x: coords.curso.x,  y: coords.curso.y,  size: fs, font, color });
+        if (ciclo) page.drawText(ciclo, { x: coords.ciclo.x, y: coords.ciclo.y, size: fs, font, color });
+        if (lugar) page.drawText(lugar, { x: coords.lugar.x, y: coords.lugar.y, size: fs, font, color });
+        page.drawText(fecha,  { x: coords.fecha.x,  y: coords.fecha.y,  size: fs, font, color });
+      }
+
+      const pdfBytes = await pdfDoc.save();
+      const safeAlumno = alumno.trim().toLowerCase().replace(/\s+/g,'_').replace(/[^\w\-]/g,'');
+      const fileName = `certificado_${tipo}_${safeAlumno}_${nivel}.pdf`;
+
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      window.open(URL.createObjectURL(blob), '_blank');
+    });
+  </script>
+</body>
+</html>
