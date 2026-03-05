@@ -253,10 +253,23 @@
         page.drawText(fecha,  { x: coords.fecha.x,  y: coords.fecha.y,  size: fs, font, color });
       }
 
-      const pdfBytes = await pdfDoc.save();
-      const safeAlumno = alumno.trim().toLowerCase().replace(/\s+/g,'_').replace(/[^\w\-]/g,'');
-      const fileName = `certificado_${tipo}_${safeAlumno}_${nivel}.pdf`;
+      // ── Montar certificado en mitad superior de hoja A4 vertical ────────
+      const a4Doc  = await PDFDocument.create();
+      const a4Page = a4Doc.addPage([595.28, 841.89]);
 
+      const [certEmbedded] = await a4Doc.embedPdf(pdfDoc, [0]);
+
+      const certW = a4Page.getWidth();
+      const certH = a4Page.getHeight() / 2;
+
+      a4Page.drawPage(certEmbedded, {
+        x: 0,
+        y: certH,
+        width:  certW,
+        height: certH,
+      });
+
+      const pdfBytes = await a4Doc.save();
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       window.open(URL.createObjectURL(blob), '_blank');
     });
