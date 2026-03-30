@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instituto Antonio Toro — Salidas Educativas</title>
+  <link rel="icon" href="../images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../index.css">
+  <style>
+    /* ── Cards de anexos ── */
+    .anexos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      max-width: 860px;
+      width: 100%;
+    }
+
+    .anexo-card {
+      position: relative;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2rem 1.8rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex; flex-direction: column; align-items: center; gap: 1rem;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+      overflow: hidden;
+      animation: fadeUp 0.6s ease both;
+    }
+    .anexo-card:nth-child(1) { animation-delay: 0.25s; }
+    .anexo-card:nth-child(2) { animation-delay: 0.35s; }
+    .anexo-card:nth-child(3) { animation-delay: 0.45s; }
+    .anexo-card:nth-child(4) { animation-delay: 0.55s; }
+    .anexo-card:nth-child(5) { animation-delay: 0.65s; }
+
+    .anexo-card::before {
+      content: '';
+      position: absolute; inset: 0; border-radius: 20px;
+      background: linear-gradient(135deg, rgba(20,90,40,0.25), rgba(40,140,70,0.12));
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .anexo-card:hover::before { opacity: 1; }
+    .anexo-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+      border-color: rgba(80,180,100,0.4);
+    }
+
+    .anexo-numero {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(120,210,140,0.8);
+      position: relative; z-index: 1;
+    }
+
+    .anexo-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--text-light);
+      text-align: center;
+      line-height: 1.4;
+      position: relative; z-index: 1;
+    }
+
+    .anexo-arrow {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      position: relative; z-index: 1;
+      transition: color 0.3s, transform 0.3s;
+      margin-top: 0.3rem;
+    }
+    .anexo-card:hover .anexo-arrow {
+      color: rgba(120,210,140,0.9);
+      transform: translateX(4px);
+    }
+
+    .anexo-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: rgba(20,90,40,0.35);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      position: relative; z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-layer"></div>
+  <div class="bg-lines"></div>
+
+  <div class="page">
+    <nav class="topnav" style="width:100%; max-width:860px; display:flex; align-items:center; justify-content:space-between; margin-bottom:2.5rem; animation: fadeDown 0.6s ease both;">
+      <a href="../index.html" style="font-size:0.72rem; letter-spacing:0.15em; color:var(--text-muted); text-decoration:none; display:flex; align-items:center; gap:0.4rem; transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.92)'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">← VOLVER AL MENÚ</a>
+      <span style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; padding:0.28rem 0.9rem; border-radius:999px; background:rgba(20,90,40,0.4); color:rgba(120,210,140,0.9); border:1px solid rgba(20,90,40,0.5);">Salidas Educativas</span>
+    </nav>
+
+    <header class="header">
+      <p class="header-eyebrow">Instituto Privado Antonio Toro</p>
+      <h1>Salidas <span>Educativas</span></h1>
+      <div class="header-line"></div>
+    </header>
+
+    <p class="subtitle">Seleccioná el anexo que necesitás completar</p>
+
+    <nav class="anexos-grid">
+
+      <a href="../docs/ANEXO_4_editable.pdf" target="_blank" class="anexo-card">
+        <div class="anexo-icon">📋</div>
+        <span class="anexo-numero">Anexo 4</span>
+        <span class="anexo-title">Formulario de Itinerario, Actividades, Objetivos y Cronograma</span>
+        <span class="anexo-arrow">ABRIR →</span>
+      </a>
+
+      <a href="../docs/ANEXO_5_editable.pdf" target="_blank" class="anexo-card">
+        <div class="anexo-icon">👥</div>
+        <span class="anexo-numero">Anexo 5</span>
+        <span class="anexo-title">Planilla de Estudiantes y Acompañantes</span>
+        <span class="anexo-arrow">ABRIR →</span>
+      </a>
+
+      <a href="../docs/ANEXO_6_editable.pdf" target="_blank" class="anexo-card">
+        <div class="anexo-icon">📄</div>
+        <span class="anexo-numero">Anexo 6</span>
+        <span class="anexo-title">Planilla Informativa y Autorización</span>
+        <span class="anexo-arrow">ABRIR →</span>
+      </a>
+
+      <a href="../docs/ANEXO_8_editable.pdf" target="_blank" class="anexo-card">
+        <div class="anexo-icon">🚌</div>
+        <span class="anexo-numero">Anexo 8</span>
+        <span class="anexo-title">Planilla Informe de Transporte a Contratar</span>
+        <span class="anexo-arrow">ABRIR →</span>
+      </a>
+
+      <a href="../docs/ANEXO_9_editable.pdf" target="_blank" class="anexo-card">
+        <div class="anexo-icon">✍️</div>
+        <span class="anexo-numero">Anexo 9</span>
+        <span class="anexo-title">Declaración Jurada de Directivos y/o Representantes Legales</span>
+        <span class="anexo-arrow">ABRIR →</span>
+      </a>
+
+    </nav>
+
+    <footer class="footer">
+      SISTEMA DE EMISIÓN DE CERTIFICADOS &nbsp;·&nbsp; SECRETARÍA ACADÉMICA
+      <br>
+      <span style="opacity: 0.35; font-size: 0.62rem; letter-spacing: 0.2em;">powered by Alan Gómez</span>
+    </footer>
+  </div>
+</body>
+</html>

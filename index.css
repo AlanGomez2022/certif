@@ -108,11 +108,9 @@ font-family: "Montserrat", sans-serif;
 
 /* ── Menú cards ── */
 .menu-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5rem;
-  max-width: 680px;
-  width: 100%;
+ display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
+  gap: 20px;
 }
 
 .menu-card {
@@ -216,3 +214,8 @@ font-family: "Montserrat", sans-serif;
 @media (max-width: 500px) {
   .menu-grid { grid-template-columns: 1fr; max-width: 340px; }
 }
+.menu-card.card-salidas::before {
+  background: linear-gradient(135deg, rgba(20,90,40,0.3), rgba(40,140,70,0.15));
+}
+.menu-card.card-salidas:hover { border-color: rgba(80,180,100,0.4); }
+.card-salidas .card-icon { background: rgba(20,90,40,0.35); }
