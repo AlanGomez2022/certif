@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instituto Antonio Toro — Constancia General</title>
+  <link rel="icon" href="../images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="formulario.css">
+  <style>
+    .field textarea {
+      width: 100%;
+      min-height: 240px;
+      resize: vertical;
+      padding: 0.7rem 1rem;
+      border: 1px solid var(--input-border);
+      border-radius: 10px;
+      background: var(--input-bg);
+      color: var(--text-light);
+      font: 400 0.95rem/1.7 'Jost', sans-serif;
+      outline: none;
+    }
+    .field textarea:focus {
+      border-color: rgba(200,150,160,0.5);
+      background: rgba(255,255,255,0.11);
+      box-shadow: 0 0 0 3px rgba(107,26,42,0.2);
+    }
+    .fecha-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    @media (max-width: 580px) {
+      .fecha-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-layer"></div>
+  <div class="bg-lines"></div>
+  <div class="page">
+    <nav class="topnav">
+      <a href="../index.html" class="back-btn">← VOLVER</a>
+      <span class="tipo-badge pase">Constancia General</span>
+    </nav>
+    <div class="form-card">
+      <div class="card-header">
+        <img class="card-logo" src="../images/constancia.png" alt="">
+        <div class="card-header-text">
+          <p class="card-eyebrow">Instituto Privado Antonio Toro</p>
+          <h1 class="card-title">Constancia <span>General</span></h1>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="card-body">
+        <form id="form-cons-general">
+          <div class="form-grid">
+            <div class="field">
+              <label for="emisor">Quien emite:</label>
+              <select id="emisor" name="emisor">
+                <option value="Alan Gomez (secretario)">Secretario</option>
+                <option value="Juliana nardi (vicedirectora)">Vicedirectora</option>
+                <option value="Pablo Fiore (director)">Director</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="dirigido">Dirigido a:</label>
+              <select id="dirigido" name="dirigido">
+                <option value="Docente">Docente</option>
+                <option value="Alumno">Alumno</option>
+                <option value="Preceptor">Preceptor</option>
+                <option value="Padre/Madre/Tutor">Padre/Madre/Tutor</option>
+                <option value="">Otro</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="nombre">Nombre completo</label>
+              <input type="text" id="nombre" name="nombre" placeholder="ingrese nombre y apellido" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="dni">DNI</label>
+              <input type="text" id="dni" name="dni" placeholder="Ingrese el número de DNI" inputmode="numeric" required>
+            </div>
+            <div class="field full">
+              <label for="texto">Se hace constar que</label>
+              <textarea id="texto" name="texto" rows="10" required></textarea>
+            </div>
+            <div class="field full">
+              <label for="presentar">Presentar ante</label>
+              <input type="text" id="presentar" name="presentar" value="A quien corresponda">
+            </div>
+            <div class="field full">
+              <label for="lugar">Lugar</label>
+              <input type="text" id="lugar" name="lugar" value="Presidente Derqui, Pilar, Bs. As.">
+            </div>
+            <div class="fecha-grid full">
+              <div class="field">
+                <label for="dia">Día:</label>
+                <select id="dia" name="dia"></select>
+              </div>
+              <div class="field">
+                <label for="mes">Mes</label>
+                <select id="mes" name="mes"></select>
+              </div>
+              <div class="field">
+                <label for="anio">Año</label>
+                <input type="number" id="anio" name="anio" min="1" step="1" required>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn-submit" id="btn-generar">Generar constancia</button>
+          <p id="estado-pdf" role="status" style="color: var(--text-muted); margin-top: 1rem;"></p>
+        </form>
+      </div>
+    </div>
+    <footer class="footer">
+      SISTEMA DE EMISIÓN DE CERTIFICADOS &nbsp;·&nbsp; SECRETARÍA ACADÉMICA
+      <br>
+      <span style="opacity: 0.35; font-size: 0.62rem; letter-spacing: 0.2em;">powered by Alan Gómez</span>
+    </footer>
+  </div>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="form_cons_general.js"></script>
+  <script>
+    const hoy = new Date();
+    const dia = document.getElementById('dia');
+    const mes = document.getElementById('mes');
+    const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+    for (let numero = 1; numero <= 31; numero++) {
+      dia.add(new Option(String(numero), String(numero)));
+    }
+    meses.forEach((nombre) => mes.add(new Option(nombre, nombre)));
+    dia.value = String(hoy.getDate());
+    mes.value = meses[hoy.getMonth()];
+    document.getElementById('anio').value = hoy.getFullYear();
+
+  </script>
+</body>
+</html>

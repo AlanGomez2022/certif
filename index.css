@@ -53,10 +53,12 @@ html, body {
 .page {
   position: relative; z-index: 1;
   min-height: 100vh;
+  min-height: 100svh;
   display: flex; flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 3rem 1.5rem;
+  padding: clamp(1rem, 3vh, 2rem) 1.5rem;
+  gap: clamp(0.75rem, 2vh, 1.5rem);
 }
 .icono{
   width: 100%;
@@ -65,7 +67,7 @@ html, body {
 /* ── Header ── */
 .header {
   text-align: center;
-  margin-bottom: 3.5rem;
+  margin-bottom: 0;
   animation: fadeDown 0.8s ease both;
 }
 .header-eyebrow {
@@ -80,7 +82,7 @@ html, body {
 .header h1 {
 font-family: "Montserrat", sans-serif;
   font-weight: 300;
-  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-size: clamp(1.7rem, 4vw, 2.7rem);
   color: var(--text-light);
   line-height: 1.1;
   letter-spacing: 0.02em;
@@ -101,7 +103,7 @@ font-family: "Montserrat", sans-serif;
   font-weight: 300;
   letter-spacing: 0.12em;
   color: var(--text-muted);
-  margin-bottom: 3rem;
+  margin-bottom: 0;
   text-align: center;
   animation: fadeDown 0.8s 0.15s ease both;
 }
@@ -109,8 +111,10 @@ font-family: "Montserrat", sans-serif;
 /* ── Menú cards ── */
 .menu-grid {
  display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* 3 columnas iguales */
-  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  max-width: 1200px;
+  gap: 16px;
 }
 
 .menu-card {
@@ -118,10 +122,10 @@ font-family: "Montserrat", sans-serif;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: 20px;
-  padding: 2.5rem 2rem;
+  padding: clamp(0.75rem, 2vh, 1.25rem) 1rem;
   cursor: pointer;
   text-decoration: none;
-  display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
+  display: flex; flex-direction: column; align-items: center; gap: clamp(0.5rem, 1.2vh, 0.75rem);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
@@ -130,6 +134,9 @@ font-family: "Montserrat", sans-serif;
 }
 .menu-card:nth-child(1) { animation-delay: 0.25s; }
 .menu-card:nth-child(2) { animation-delay: 0.4s; }
+.menu-card:nth-child(3) { animation-delay: 0.55s; }
+.menu-card:nth-child(4) { animation-delay: 0.7s; }
+.menu-card:nth-child(5) { animation-delay: 0.85s; }
 
 .menu-card::before {
   content: '';
@@ -163,7 +170,7 @@ font-family: "Montserrat", sans-serif;
 
 .card-label {
   font-family: "Montserrat", sans-serif;
-  font-size: 1.35rem;
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
   font-weight: 600;
   letter-spacing: 0.03em;
   color: var(--text-light);
@@ -192,7 +199,7 @@ font-family: "Montserrat", sans-serif;
 
 /* ── Footer ── */
 .footer {
-  margin-top: 4rem;
+  margin-top: 0;
   font-size: 0.72rem;
   letter-spacing: 0.15em;
   color: var(--text-muted);
@@ -211,6 +218,11 @@ font-family: "Montserrat", sans-serif;
 }
 
 /* ── Responsive ── */
+@media (max-width: 900px) {
+  .menu-grid { grid-template-columns: repeat(2, 1fr); max-width: 650px; }
+  .menu-card { padding: 0.85rem; gap: 0.5rem; }
+  .card-icon { width: 42px; height: 42px; }
+}
 @media (max-width: 500px) {
   .menu-grid { grid-template-columns: 1fr; max-width: 340px; }
 }
@@ -219,3 +231,10 @@ font-family: "Montserrat", sans-serif;
 }
 .menu-card.card-salidas:hover { border-color: rgba(80,180,100,0.4); }
 .card-salidas .card-icon { background: rgba(20,90,40,0.35); }
+
+.card-analitico .card-icon { background: rgba(107,26,42,0.35); }
+.card-general .card-icon { background: rgba(26,58,107,0.35); }
+.menu-card.card-general::before {
+  background: linear-gradient(135deg, rgba(26,58,107,0.3), rgba(42,82,152,0.15));
+}
+.menu-card.card-general:hover { border-color: rgba(80,130,210,0.4); }
