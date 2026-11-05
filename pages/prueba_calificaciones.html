@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prueba — Carga Calificaciones</title>
+  <link rel="icon" href="../images/favicon.ico">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #0f2347; color: #fff; font-family: sans-serif; }
+    header { display: flex; align-items: center; flex-wrap: wrap; gap: 0.75rem; padding: 0.75rem 1rem; }
+    p { margin: 0; font-size: 0.85rem; }
+    button { padding: 0.6rem 1rem; border: 1px solid #ffffff55; border-radius: 8px; background: #6b1a2a; color: #fff; cursor: pointer; }
+    iframe { display: block; width: 100%; height: calc(100dvh - 100px); border: 0; }
+    #estado-prueba { width: 100%; color: #a5edbc; }
+  </style>
+</head>
+<body>
+  <header>
+    <p><strong>SIMULACRO — Datos ficticios.</strong> Podés editar cualquier campo para probar los cálculos.</p>
+    <button type="button" id="recargar-prueba">Volver a cargar el simulacro</button>
+    <p id="estado-prueba" role="status">Cargando…</p>
+  </header>
+  <iframe id="formulario-prueba" title="Analítico parcial con datos de prueba"></iframe>
+  <script src="prueba_calificaciones.js"></script>
+</body>
+</html>

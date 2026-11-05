@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instituto Antonio Toro — Carga Calificaciones</title>
+  <link rel="icon" href="../images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="formulario.css">
+  <style>
+    .page { padding: 1.25rem 0.75rem; }
+    .topnav { margin-bottom: 1rem; }
+    .card-header { flex-wrap: wrap; padding: 1.25rem; gap: 1rem; }
+    .card-logo { width: 48px; height: 48px; }
+    .card-title { font-size: 1.35rem; }
+    .card-body { padding: 1rem; }
+    .form-card, .topnav { max-width: 1400px; }
+    .form-card, .bloque-anio, #contenido-calificaciones { min-width: 0; }
+    #form-alumno { width: 100%; min-width: 0; }
+    #form-alumno .form-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.75rem 1rem; }
+    #form-alumno .full { grid-column: span 2; }
+    .field { min-width: 0; }
+    .field input, .field select { min-width: 0; padding: 0.5rem 0.6rem; font-size: 0.8rem; }
+    .field label { font-size: 0.62rem; letter-spacing: 0.08em; }
+    #contenido-calificaciones { display: grid; gap: 1rem; }
+    .bloque-anio {
+      padding: 0.75rem;
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      background: var(--input-bg);
+    }
+    .bloque-anio h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-light);
+    }
+    .tabla-materias {
+      width: 100%;
+      min-width: 0;
+      margin-top: 0.75rem;
+      border-collapse: collapse;
+      table-layout: fixed;
+      color: var(--text-light);
+      font-size: clamp(0.62rem, 0.9vw, 0.78rem);
+    }
+    .tabla-materias th, .tabla-materias td {
+      border: 1px solid var(--glass-border);
+      padding: 0.3rem;
+      text-align: left;
+      overflow-wrap: anywhere;
+    }
+    .tabla-materias thead th { background: rgba(26,58,107,0.35); font-weight: 500; }
+    .tabla-scroll { min-width: 0; }
+    .tabla-materias .col-materia { width: 24%; }
+    .tabla-materias .col-nota { width: 8%; }
+    .tabla-materias .col-letras { width: 16%; }
+    .tabla-materias .col-condicion { width: 13%; }
+    .tabla-materias .col-mes { width: 9%; }
+    .tabla-materias .col-anio { width: 10%; }
+    .tabla-materias .col-establecimiento { width: 20%; }
+    .tabla-materias tbody th { font-weight: 400; }
+    .tabla-materias .field input, .tabla-materias .field select {
+      padding: 0.35rem 0.2rem;
+      font-size: inherit;
+      border-radius: 6px;
+    }
+    .tabla-materias .field input { text-align: center; }
+    .tabla-materias input[aria-invalid="true"] { border-color: #ff8585; }
+    .resumen-anio {
+      display: grid;
+      grid-template-columns: minmax(110px, 160px) auto minmax(70px, 110px) minmax(0, 1fr);
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .resumen-anio label { color: var(--text-muted); font-size: 0.8rem; }
+    .resumen-anio input[readonly] { font-weight: 600; text-align: center; }
+    .resumen-anio .estado-incompleto { color: #ff8585; }
+    .resumen-anio .estado-completo { color: #80e5a1; }
+    .acciones-analitico { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.25rem; }
+    .acciones-analitico .btn-submit { flex: 1 1 220px; margin-top: 0; }
+    #estado-analitico { color: var(--text-light); font-size: 0.85rem; margin-top: 0.75rem; }
+    @media (max-width: 780px) {
+      .resumen-anio { grid-template-columns: 1fr 1fr; }
+      .resumen-anio .promedio-letras { grid-column: 1 / -1; }
+    }
+    .fecha-nacimiento {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.6rem;
+    }
+    @media (max-width: 1000px) {
+      #form-alumno .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 580px) {
+      .card-header, .card-body { padding: 0.75rem; }
+      #form-alumno .form-grid { grid-template-columns: minmax(0, 1fr); }
+      #form-alumno .full { grid-column: 1; }
+      .fecha-nacimiento { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .tabla-materias { font-size: 0.8rem; }
+      .tabla-materias colgroup, .tabla-materias thead { display: none; }
+      .tabla-materias, .tabla-materias tbody { display: block; }
+      .tabla-materias tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-bottom: 0.75rem; }
+      .tabla-materias tbody th { grid-column: 1 / -1; background: rgba(26,58,107,0.35); font-weight: 500; }
+      .tabla-materias td { min-width: 0; }
+      .tabla-materias td::before { content: attr(data-label); display: block; margin-bottom: 0.3rem; color: var(--text-muted); font-size: 0.7rem; }
+      .resumen-anio { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-layer"></div>
+  <div class="bg-lines"></div>
+
+  <div class="page">
+    <nav class="topnav">
+      <a href="../index.html" class="back-btn">← VOLVER</a>
+      <span class="tipo-badge pase">Carga Calificaciones</span>
+    </nav>
+
+    <main class="form-card">
+      <div class="card-header" id="card.header">
+        <img class="card-logo" src="../images/analiticos.png" alt="">
+        <div class="card-header-text">
+          <p class="card-eyebrow">Instituto Privado Antonio Toro</p>
+          <h1 class="card-title">Carga <span>Calificaciones</span></h1>
+        </div>
+        <form id="form-alumno" aria-label="Datos del alumno">
+          <div class="form-grid">
+            <div class="field full">
+              <label for="alumno">Apellido y nombre completo</label>
+              <input type="text" id="alumno" name="alumno" placeholder="Ingrese apellido y nombre completo" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="dni">DNI N°:</label>
+              <input type="text" id="dni" name="dni" inputmode="numeric" placeholder="Ingrese el DNI" required>
+            </div>
+            <div class="field">
+              <label for="ciudad-nacimiento">Ciudad de nacimiento:</label>
+              <input type="text" id="ciudad-nacimiento" name="ciudad_nacimiento" placeholder="Ingrese la ciudad de nacimiento" required>
+            </div>
+            <div class="field full">
+              <label for="provincia">Provincia:</label>
+              <input type="text" id="provincia" name="provincia" placeholder="Ingrese la provincia" required>
+            </div>
+            <div class="fecha-nacimiento full">
+              <div class="field">
+                <label for="dia-nacimiento">Día de nacimiento:</label>
+                <select id="dia-nacimiento" name="dia_nacimiento" required>
+                  <option value="">Día</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="mes-nacimiento">Mes de nacimiento:</label>
+                <select id="mes-nacimiento" name="mes_nacimiento" required>
+                  <option value="">Mes</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="anio-nacimiento">Año de nacimiento:</label>
+                <select id="anio-nacimiento" name="anio_nacimiento" required>
+                  <option value="">Año</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="libro-matriz">Libro matriz N°:</label>
+              <input type="text" id="libro-matriz" name="libro_matriz" placeholder="Ingrese el número de libro matriz" required>
+            </div>
+            <div class="field">
+              <label for="folio">Folio N°:</label>
+              <input type="text" id="folio" name="folio" placeholder="Ingrese el número de folio" required>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="divider"></div>
+      <div class="card-body" id="contenido-calificaciones">
+        <section class="bloque-anio" id="primer-anio" aria-labelledby="titulo-primer-anio">
+          <h2 id="titulo-primer-anio">Primer Año</h2>
+          <!-- Aquí se incorporarán las calificaciones de Primer Año. -->
+        </section>
+        <section class="bloque-anio" id="segundo-anio" aria-labelledby="titulo-segundo-anio">
+          <h2 id="titulo-segundo-anio">Segundo Año</h2>
+          <!-- Aquí se incorporarán las calificaciones de Segundo Año. -->
+        </section>
+        <section class="bloque-anio" id="tercer-anio" aria-labelledby="titulo-tercer-anio">
+          <h2 id="titulo-tercer-anio">Tercer Año</h2>
+          <!-- Aquí se incorporarán las calificaciones de Tercer Año. -->
+        </section>
+        <section class="bloque-anio" id="cuarto-anio" aria-labelledby="titulo-cuarto-anio">
+          <h2 id="titulo-cuarto-anio">Cuarto Año</h2>
+          <!-- Aquí se incorporarán las calificaciones de Cuarto Año. -->
+        </section>
+        <section class="bloque-anio" id="quinto-anio" aria-labelledby="titulo-quinto-anio">
+          <h2 id="titulo-quinto-anio">Quinto Año</h2>
+          <!-- Aquí se incorporarán las calificaciones de Quinto Año. -->
+        </section>
+        <section class="bloque-anio" id="sexto-anio" aria-labelledby="titulo-sexto-anio">
+          <h2 id="titulo-sexto-anio">Sexto Año</h2>
+          <!-- Aquí se incorporarán las calificaciones de Sexto Año. -->
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer">
+      SISTEMA DE EMISIÓN DE CERTIFICADOS &nbsp;·&nbsp; SECRETARÍA ACADÉMICA
+      <br>
+      <span style="opacity: 0.35; font-size: 0.62rem; letter-spacing: 0.2em;">powered by Alan Gómez</span>
+    </footer>
+  </div>
+  <script src="carga_calificaciones.js"></script>
+  <script>
+    const diaNacimiento = document.getElementById('dia-nacimiento');
+    const mesNacimiento = document.getElementById('mes-nacimiento');
+    const anioNacimiento = document.getElementById('anio-nacimiento');
+    const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    for (let dia = 1; dia <= 31; dia++) {
+      diaNacimiento.add(new Option(String(dia), String(dia)));
+    }
+    meses.forEach((mes, indice) => {
+      mesNacimiento.add(new Option(mes, String(indice + 1)));
+    });
+    const anioActual = new Date().getFullYear();
+    for (let anio = anioActual; anio >= 1900; anio--) {
+      anioNacimiento.add(new Option(String(anio), String(anio)));
+    }
+    function actualizarDias() {
+      const seleccionado = diaNacimiento.value;
+      const mes = Number(mesNacimiento.value);
+      const anio = Number(anioNacimiento.value) || 2000;
+      const cantidad = mes ? new Date(anio, mes, 0).getDate() : 31;
+      diaNacimiento.length = 1;
+      for (let dia = 1; dia <= cantidad; dia++) {
+        diaNacimiento.add(new Option(String(dia), String(dia)));
+      }
+      diaNacimiento.value = Number(seleccionado) <= cantidad ? seleccionado : '';
+    }
+    mesNacimiento.addEventListener('change', actualizarDias);
+    anioNacimiento.addEventListener('change', actualizarDias);
+    document.getElementById('form-alumno').addEventListener('submit', (event) => {
+      event.preventDefault();
+    });
+  </script>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="analitico_pdf.js"></script>
+  <script src="analitico_acciones.js"></script>
+</body>
+</html>
